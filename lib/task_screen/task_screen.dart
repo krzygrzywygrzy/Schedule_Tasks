@@ -4,6 +4,7 @@ import 'package:schedule_tasks/const.dart';
 import 'package:schedule_tasks/models/task_model.dart';
 import 'package:schedule_tasks/task_screen/add_task_screen.dart';
 import 'package:schedule_tasks/task_screen/bloc/task_bloc.dart';
+import 'package:schedule_tasks/widgets/task_card.dart';
 
 class TaskScreen extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 height: 50,
                 child: Center(
                   child: Text(
-                    "${weekDays[date.weekday-1]} ${date.day}.${date.month}.${date.year}",
+                    "${weekDays[date.weekday - 1]} ${date.day}.${date.month}.${date.year}",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -55,21 +56,10 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Theme.of(context).primaryColor,
-                  child: ListView(
-                    children: [
-                      Container(
-                        height: 50,
-                        child: Placeholder(),
-                      ),
-                      Container(
-                        height: 50,
-                        child: Placeholder(),
-                      ),
-                      Container(
-                        height: 50,
-                        child: Placeholder(),
-                      ),
-                    ],
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return TaskCard();
+                    },
                   ),
                 ),
               ),

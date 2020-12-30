@@ -22,6 +22,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     if(event is LoadAllTasks){
       yield TaskLoading();
       List<Task> tasks = await _localDataSource.getTasks();
+      print(tasks);
       yield MainScreen(tasks: tasks, date: dateTime);
     }
     if (event is DisplayAddTaskScreen){
