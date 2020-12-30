@@ -9,10 +9,15 @@ class TaskLoading extends TaskState {
   List<Object> get props => [];
 }
 
-class TaskLoaded extends TaskState {
-  TaskLoaded({this.tasks, this.date});
+class MainScreen extends TaskState {
+  MainScreen({@required this.tasks, @required this.date});
   final DateTime date;
   final List<Task> tasks;
   @override
   List<Object> get props => [tasks, date];
+}
+
+class AddScreen extends TaskState {
+  @override
+  List<Object> get props => [];
 }
