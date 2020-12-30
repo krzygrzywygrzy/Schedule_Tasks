@@ -9,11 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Schedule Task',
+      theme: ThemeData.dark().copyWith(
+        //primaryColor: Colors.red,
+        accentColor: Colors.red,
+      ),
       home: TaskScreen(),
     );
   }
-
-
 }
-

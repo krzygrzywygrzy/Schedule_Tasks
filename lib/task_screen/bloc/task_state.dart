@@ -10,8 +10,9 @@ class TaskLoading extends TaskState {
 }
 
 class TaskLoaded extends TaskState {
-  TaskLoaded({this.tasks});
+  TaskLoaded({this.tasks, this.date});
+  final DateTime date;
   final List<Task> tasks;
   @override
-  List<Object> get props => [tasks];
+  List<Object> get props => [tasks, date];
 }
