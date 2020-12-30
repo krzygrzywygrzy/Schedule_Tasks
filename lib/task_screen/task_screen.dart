@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_tasks/models/task_model.dart';
+import 'package:schedule_tasks/services/local_data_source.dart';
 import 'package:schedule_tasks/task_screen/bloc/task_bloc.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -92,8 +93,19 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 
+  void test() async {
+    List<Task> tasks = [
+      Task(time: TimeOfDay(hour: 12, minute: 12), weekDays: ["Mon", "Sun",], title: "damn", description: "damn"),
+      Task(time: TimeOfDay(hour: 12, minute: 12), weekDays: ["",], title: "co jest", description: "co jest"),
+    ];
+    LocalDataSource _localDataSource = LocalDataSource();
+    _localDataSource.cacheData(tasks);
+    await _localDataSource.getTasks();
+  }
+
   @override
-  void initState() {
+  void initState()  {
+    test();
     super.initState();
   }
 }

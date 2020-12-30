@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 class Task extends Equatable {
   final TimeOfDay time; //describes time of day when the task is scheduled
-  final List<String>
+  final List<dynamic>
       weekDays; //describes days of the week in which task is scheduled
   final String title; //describes title of the task
   final String description;
@@ -18,7 +18,7 @@ class Task extends Equatable {
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-      time: json["time"],
+      time: TimeOfDay(hour:json["hour"], minute:  json["minute"]),
       weekDays: json["weekDays"],
       title: json["title"],
       description: json["description"],
@@ -27,7 +27,8 @@ class Task extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      "time": time,
+      "hour": time.hour,
+      "minute": time.minute,
       "weekDays": weekDays,
       "title": title,
       "description": description,
