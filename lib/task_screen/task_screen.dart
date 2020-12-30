@@ -22,13 +22,15 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
       body: SafeArea(
-        child: BlocProvider(
-          create: (_) => TaskBloc(),
-          child: BlocBuilder<TaskBloc, TaskState>(
-            builder: (context, state) {
-              return loaded(null, null);
-            },
-          ),
+        child: BlocBuilder<TaskBloc, TaskState>(
+          builder: (context, state) {
+            if(state is TaskLoading){
+              return loading();
+            }
+            else if(state is TaskLoaded){
+              return loaded(state.tasks, null);
+            }
+          },
         ),
       ),
     );
@@ -93,19 +95,9 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 
-  void test() async {
-    List<Task> tasks = [
-      Task(time: TimeOfDay(hour: 12, minute: 12), weekDays: ["Mon", "Sun",], title: "damn", description: "damn"),
-      Task(time: TimeOfDay(hour: 12, minute: 12), weekDays: ["",], title: "co jest", description: "co jest"),
-    ];
-    LocalDataSource _localDataSource = LocalDataSource();
-    _localDataSource.cacheData(tasks);
-    await _localDataSource.getTasks();
-  }
-
   @override
-  void initState()  {
-    test();
+  void initState() {
+    BlocProvider.of<TaskBloc>(context).add(LoadAllTasks());
     super.initState();
   }
 }

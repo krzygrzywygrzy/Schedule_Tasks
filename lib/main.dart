@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_tasks/task_screen/bloc/task_bloc.dart';
 import 'package:schedule_tasks/task_screen/task_screen.dart';
 
 void main() {
@@ -15,7 +17,8 @@ class MyApp extends StatelessWidget {
         //primaryColor: Colors.red,
         accentColor: Colors.red,
       ),
-      home: TaskScreen(),
+      home: BlocProvider<TaskBloc>(
+          create: (_) => TaskBloc(), child: TaskScreen()),
     );
   }
 }

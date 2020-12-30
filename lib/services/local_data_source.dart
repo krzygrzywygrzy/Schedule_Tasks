@@ -25,9 +25,7 @@ class LocalDataSource {
         List<Task> list = [];
         for (int i = 0; i <= data.length - 1; i++) {
           list.add(Task.fromJson(data[i]));
-          print(list[i].weekDays);
         }
-
       } else
         return [];
     } else {
