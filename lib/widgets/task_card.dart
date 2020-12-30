@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 class TaskCard extends StatelessWidget {
   const TaskCard({
     Key key,
+    @required this.title,
+    @required this.time,
+    this.description,
   }) : super(key: key);
+
+  final String title;
+  final String description;
+  final TimeOfDay time;
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +19,7 @@ class TaskCard extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
           border: Border.all(color: Theme.of(context).primaryColor, width: 3),
           borderRadius: BorderRadius.circular(15),
         ),
@@ -22,9 +30,11 @@ class TaskCard extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Text(
-                    "Title",
+                    "$title",
+                    textAlign: TextAlign.end,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -34,7 +44,7 @@ class TaskCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("Begins at: 16:00"),
+                      Text("Begins at: ${time.hour}:${time.minute}"),
                       Text("Duration: 4h"),
                     ],
                   ),
@@ -43,12 +53,21 @@ class TaskCard extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text(
-                  "Description Description Description Description Description Description"),
+              Container(
+                child: displayDescription(),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget displayDescription() {
+    if (description != null) {
+      return Text('$description');
+    } else {
+      return Container();
+    }
   }
 }

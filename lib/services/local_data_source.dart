@@ -26,6 +26,7 @@ class LocalDataSource {
         for (int i = 0; i <= data.length - 1; i++) {
           list.add(Task.fromJson(data[i]));
         }
+        return list;
       } else
         return [];
     } else {

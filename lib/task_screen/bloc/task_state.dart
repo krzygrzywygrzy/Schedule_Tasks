@@ -21,3 +21,8 @@ class AddScreen extends TaskState {
   @override
   List<Object> get props => [];
 }
+
+class EmptyScreen extends TaskState {
+  @override
+  List<Object> get props => throw [];
+}

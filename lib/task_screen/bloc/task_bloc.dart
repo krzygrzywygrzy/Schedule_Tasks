@@ -19,13 +19,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   Stream<TaskState> mapEventToState(
     TaskEvent event,
   ) async* {
-    if(event is LoadAllTasks){
-      yield TaskLoading();
-      List<Task> tasks = await _localDataSource.getTasks();
-      print(tasks);
-      yield MainScreen(tasks: tasks, date: dateTime);
+    if (event is LoadAllTasks) {
+      try {
+        yield TaskLoading();
+        List<Task> tasks = await _localDataSource.getTasks();
+        yield MainScreen(tasks: tasks, date: dateTime);
+      } on CacheException {
+        yield EmptyScreen();
+      }
     }
-    if (event is DisplayAddTaskScreen){
+    if (event is DisplayAddTaskScreen) {
       yield AddScreen();
     }
   }

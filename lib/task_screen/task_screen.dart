@@ -4,6 +4,7 @@ import 'package:schedule_tasks/const.dart';
 import 'package:schedule_tasks/models/task_model.dart';
 import 'package:schedule_tasks/task_screen/add_task_screen.dart';
 import 'package:schedule_tasks/task_screen/bloc/task_bloc.dart';
+import 'package:schedule_tasks/widgets/floating_action_button.dart';
 import 'package:schedule_tasks/widgets/task_card.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -24,6 +25,8 @@ class _TaskScreenState extends State<TaskScreen> {
               return loaded(state.tasks, state.date);
             } else if (state is AddScreen) {
               return AddTaskScreen();
+            } else if (state is EmptyScreen) {
+              return empty();
             }
           },
         ),
@@ -57,8 +60,13 @@ class _TaskScreenState extends State<TaskScreen> {
                   axisDirection: AxisDirection.down,
                   color: Theme.of(context).primaryColor,
                   child: ListView.builder(
+                    itemCount: tasks.length,
                     itemBuilder: (context, index) {
-                      return TaskCard();
+                      return TaskCard(
+                        title: tasks[index].title,
+                        time: tasks[index].time,
+                        description: tasks[index].description,
+                      );
                     },
                   ),
                 ),
@@ -66,41 +74,35 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
           ],
         ),
-        Positioned(
-          bottom: 12,
-          right: 12,
-          child: GestureDetector(
-            onTap: () {
-              BlocProvider.of<TaskBloc>(context).add(DisplayAddTaskScreen());
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(1, 1),
-                      spreadRadius: 0.4,
-                      blurRadius: 6,
-                    ),
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Icon(Icons.add),
-              ),
-            ),
-          ),
-        ),
+        FloatingButton(context: context),
       ],
     );
   }
 
   Widget loading() {
     return Center(
-      child: Container(
-        child: Text(
-          "your data is loading...",
-        ),
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget empty() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text("There is nothig here yet"),
+          ),
+          Positioned(
+            bottom: 12,
+            right: 12,
+            child: FloatingButton(
+              context: context,
+            ),
+          ),
+        ],
       ),
     );
   }
