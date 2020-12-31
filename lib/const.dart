@@ -7,3 +7,13 @@ List<String> weekDays = [
   "Saturday",
   "Sunday",
 ];
+
+List<String> weekDaysShort = [
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+];

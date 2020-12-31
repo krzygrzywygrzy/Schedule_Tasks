@@ -18,7 +18,6 @@ class TimePicker extends StatelessWidget {
       children: [
         Text(
           "$label",
-          style: TextStyle(color: Colors.white54),
         ),
         Container(
           child: GestureDetector(
@@ -29,7 +28,7 @@ class TimePicker extends StatelessWidget {
             },
             child: Text(
               "${_formatTime(time.hour)}:${_formatTime(time.minute)}",
-              style: TextStyle(color: Colors.white54, fontSize: 100),
+              style: TextStyle(fontSize: 70),
             ),
           ),
         ),

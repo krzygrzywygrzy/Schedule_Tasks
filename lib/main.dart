@@ -14,11 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Schedule Task',
       theme: ThemeData.dark().copyWith(
-        //primaryColor: Colors.red,
-        accentColor: Colors.red,
-        textSelectionHandleColor: Colors.red,
+        accentColor: Colors.white54,
+        textSelectionHandleColor: Colors.white54,
         colorScheme: ColorScheme.dark().copyWith(
-          primary: Colors.red,
+          primary: Colors.white54,
         ),
       ),
       home: BlocProvider<TaskBloc>(
