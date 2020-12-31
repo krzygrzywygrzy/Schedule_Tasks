@@ -14,6 +14,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   LocalDataSource _localDataSource = LocalDataSource();
   DateTime dateTime = DateTime.now();
+  List<Task> tasks = [];
 
   @override
   Stream<TaskState> mapEventToState(
@@ -22,10 +23,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     if (event is LoadAllTasks) {
       try {
         yield TaskLoading();
-        List<Task> tasks = await _localDataSource.getTasks();
+        tasks = await _localDataSource.getTasks();
         yield MainScreen(tasks: tasks, date: dateTime);
       } on CacheException {
-        yield EmptyScreen();
+        // yield EmptyScreen();
+        yield MainScreen(tasks: tasks, date: dateTime);
       }
     }
     if (event is DisplayAddTaskScreen) {

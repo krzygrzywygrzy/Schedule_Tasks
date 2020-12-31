@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         //primaryColor: Colors.red,
         accentColor: Colors.red,
+        textSelectionHandleColor: Colors.red,
+        colorScheme: ColorScheme.dark().copyWith(
+          primary: Colors.red,
+        ),
       ),
       home: BlocProvider<TaskBloc>(
           create: (_) => TaskBloc(), child: TaskScreen()),

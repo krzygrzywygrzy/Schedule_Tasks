@@ -54,27 +54,43 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
             ),
             Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollBehavior(),
-                child: GlowingOverscrollIndicator(
-                  axisDirection: AxisDirection.down,
-                  color: Theme.of(context).primaryColor,
-                  child: ListView.builder(
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      return TaskCard(
-                        title: tasks[index].title,
-                        time: tasks[index].time,
-                        description: tasks[index].description,
-                      );
-                    },
-                  ),
-                ),
-              ),
+              child: tasks.length != 0
+                  ? ScrollConfiguration(
+                      behavior: ScrollBehavior(),
+                      child: GlowingOverscrollIndicator(
+                        axisDirection: AxisDirection.down,
+                        color: Theme.of(context).primaryColor,
+                        child: ListView.builder(
+                          itemCount: tasks.length,
+                          itemBuilder: (context, index) {
+                            return TaskCard(
+                              title: tasks[index].title,
+                              time: tasks[index].time,
+                              description: tasks[index].description,
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Container(
+                        child: Text(
+                          "There is nothing here yet...",
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
             ),
           ],
         ),
-        FloatingButton(context: context),
+        Positioned(
+          bottom: 12,
+          right: 12,
+          child: FloatingButton(context: context),
+        ),
       ],
     );
   }
@@ -93,7 +109,7 @@ class _TaskScreenState extends State<TaskScreen> {
         children: [
           Align(
             alignment: Alignment.center,
-            child: Text("There is nothig here yet"),
+            child: Text("There was an error!"),
           ),
           Positioned(
             bottom: 12,
