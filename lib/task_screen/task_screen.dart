@@ -17,18 +17,21 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<TaskBloc, TaskState>(
-          builder: (context, state) {
-            if (state is TaskLoading) {
-              return loading();
-            } else if (state is MainScreen) {
-              return loaded(state.tasks, state.date);
-            } else if (state is AddScreen) {
-              return AddTaskScreen();
-            } else if (state is EmptyScreen) {
-              return empty();
-            }
-          },
+        child: DefaultTextStyle(
+          style: TextStyle(color: Colors.white54),
+          child: BlocBuilder<TaskBloc, TaskState>(
+            builder: (context, state) {
+              if (state is TaskLoading) {
+                return loading();
+              } else if (state is MainScreen) {
+                return loaded(state.tasks, state.date);
+              } else if (state is AddScreen) {
+                return AddTaskScreen();
+              } else {
+                return empty();
+              }
+            },
+          ),
         ),
       ),
     );
@@ -77,7 +80,6 @@ class _TaskScreenState extends State<TaskScreen> {
                         child: Text(
                           "There is nothing here yet...",
                           style: TextStyle(
-                            color: Colors.white54,
                             fontSize: 16,
                           ),
                         ),
@@ -105,20 +107,9 @@ class _TaskScreenState extends State<TaskScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Text("There was an error!"),
-          ),
-          Positioned(
-            bottom: 12,
-            right: 12,
-            child: FloatingButton(
-              context: context,
-            ),
-          ),
-        ],
+      child: Align(
+        alignment: Alignment.center,
+        child: Text("There was an error!"),
       ),
     );
   }
