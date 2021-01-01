@@ -25,6 +25,7 @@ class FloatingButton extends StatelessWidget {
                 offset: Offset(1, 1),
                 spreadRadius: 0.4,
                 blurRadius: 6,
+                color: Theme.of(context).primaryColor,
               ),
             ]),
         child: Padding(

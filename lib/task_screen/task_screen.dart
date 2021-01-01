@@ -19,18 +19,30 @@ class _TaskScreenState extends State<TaskScreen> {
       body: SafeArea(
         child: DefaultTextStyle(
           style: TextStyle(color: Colors.white54),
-          child: BlocBuilder<TaskBloc, TaskState>(
-            builder: (context, state) {
-              if (state is TaskLoading) {
-                return loading();
-              } else if (state is MainScreen) {
-                return loaded(state.tasks, state.date);
-              } else if (state is AddScreen) {
-                return AddTaskScreen();
-              } else {
-                return empty();
+          child: BlocListener<TaskBloc, TaskState>(
+            listener: (context, state) {
+              if (state is ErrorScreen) {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("There is no saved tasks!!!"),
+                  ),
+                );
               }
             },
+            child: BlocBuilder<TaskBloc, TaskState>(
+              builder: (context, state) {
+                if (state is TaskLoading) {
+                  return loading();
+                } else if (state is MainScreen) {
+                  return loaded(state.tasks, state.date);
+                } else if (state is AddScreen) {
+                  return AddTaskScreen();
+                } else {
+                  //else statement just to not get annoyied
+                  return Container();
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -38,62 +50,68 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   Widget loaded(List<Task> tasks, DateTime date) {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-              child: Container(
-                height: 50,
-                child: Center(
-                  child: Text(
-                    "${weekDays[date.weekday - 1]} ${date.day}.${date.month}.${date.year}",
-                    style: TextStyle(fontSize: 20),
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        print(details.primaryVelocity);
+        if (details.primaryVelocity >= 0) {
+          BlocProvider.of<TaskBloc>(context).add(Swiped(forward: true));
+        } else {
+          BlocProvider.of<TaskBloc>(context).add(Swiped(forward: false));
+        }
+      },
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      spreadRadius: 0.4,
+                      blurRadius: 6,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
+                ),
+                child: Container(
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      "${weekDays[date.weekday - 1]} ${date.day}.${date.month}.${date.year}",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: tasks.length != 0
-                  ? ScrollConfiguration(
-                      behavior: ScrollBehavior(),
-                      child: GlowingOverscrollIndicator(
-                        axisDirection: AxisDirection.down,
-                        color: Theme.of(context).primaryColor,
-                        child: ListView.builder(
-                          itemCount: tasks.length,
-                          itemBuilder: (context, index) {
-                            return TaskCard(
-                              title: tasks[index].title,
-                              time: tasks[index].time,
-                              description: tasks[index].description,
-                            );
-                          },
-                        ),
-                      ),
-                    )
-                  : Center(
-                      child: Container(
-                        child: Text(
-                          "There is nothing here yet...",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
-          ],
-        ),
-        Positioned(
-          bottom: 12,
-          right: 12,
-          child: FloatingButton(context: context),
-        ),
-      ],
+              Expanded(
+                  child: ScrollConfiguration(
+                behavior: ScrollBehavior(),
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: Theme.of(context).primaryColor,
+                  child: ListView.builder(
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      return TaskCard(
+                        title: tasks[index].title,
+                        time: tasks[index].time,
+                        description: tasks[index].description,
+                      );
+                    },
+                  ),
+                ),
+              )),
+            ],
+          ),
+          Positioned(
+            bottom: 12,
+            right: 12,
+            child: FloatingButton(context: context),
+          ),
+        ],
+      ),
     );
   }
 

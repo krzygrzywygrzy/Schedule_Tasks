@@ -20,3 +20,11 @@ class DisplayAddTaskScreen extends TaskEvent {
   @override
   List<Object> get props => [];
 }
+
+class Swiped extends TaskEvent {
+  final bool forward;
+  Swiped({@required this.forward});
+
+  @override
+  List<Object> get props => [forward];
+}

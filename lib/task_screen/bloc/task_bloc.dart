@@ -41,8 +41,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         _tasks = await _localDataSource.getTasks();
         yield MainScreen(tasks: _filter(), date: _dateTime);
       } on CacheException {
-        // yield EmptyScreen();
         yield MainScreen(tasks: _filter(), date: _dateTime);
+        yield ErrorScreen();
       }
     } else if (event is DisplayAddTaskScreen) {
       yield AddScreen();
@@ -50,6 +50,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     } else if (event is AddNewTask) {
       _tasks.add(event.task);
       _localDataSource.cacheData(_tasks);
+      yield MainScreen(tasks: _filter(), date: _dateTime);
+    } else if (event is Swiped) {
+      if (event.forward)
+        _dateTime = _dateTime.subtract(Duration(days: 1));
+      else
+        _dateTime = _dateTime.add(Duration(days: 1));
+
       yield MainScreen(tasks: _filter(), date: _dateTime);
     }
   }

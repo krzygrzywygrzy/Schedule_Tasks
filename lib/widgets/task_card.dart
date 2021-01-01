@@ -20,8 +20,15 @@ class TaskCard extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
-          border: Border.all(color: Theme.of(context).primaryColor, width: 3),
           borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(1, 1),
+              spreadRadius: 0.4,
+              blurRadius: 6,
+              color: Theme.of(context).primaryColor,
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
