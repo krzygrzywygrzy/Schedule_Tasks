@@ -114,6 +114,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(15),
+                            boxShadow: [kShadow],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -140,6 +141,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(15),
+                            boxShadow: [kShadow],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -187,7 +189,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
             ),
           ),
-
           //SAVE BUTTON
           Align(
             alignment: Alignment.bottomCenter,
@@ -199,31 +200,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   for (int i = 0; i <= weekDaysShort.length - 1; i++) {
                     if (selected[i]) days.add(weekDaysShort[i]);
                   }
-                  BlocProvider.of<TaskBloc>(context).add(
-                    AddNewTask(
-                      task: Task(
-                        title: title,
-                        description: description != null ? description : "",
-                        time: beginTime,
-                        endTime: endTime,
-                        weekDays: days,
+                  if (days.length > 0 && title != "") {
+                    BlocProvider.of<TaskBloc>(context).add(
+                      AddNewTask(
+                        task: Task(
+                          title: title,
+                          description: description != null ? description : "",
+                          time: beginTime,
+                          endTime: endTime,
+                          weekDays: days,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    //TODO: display alert dialog
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(1, 1),
-                        spreadRadius: 0.4,
-                        blurRadius: 6,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
+                    boxShadow: [kShadow],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

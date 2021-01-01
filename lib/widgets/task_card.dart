@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_tasks/const.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
@@ -21,14 +22,7 @@ class TaskCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 1),
-              spreadRadius: 0.4,
-              blurRadius: 6,
-              color: Theme.of(context).primaryColor,
-            ),
-          ],
+          boxShadow: [kShadow],
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

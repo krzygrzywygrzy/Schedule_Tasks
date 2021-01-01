@@ -52,7 +52,6 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget loaded(List<Task> tasks, DateTime date) {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
-        print(details.primaryVelocity);
         if (details.primaryVelocity >= 0) {
           BlocProvider.of<TaskBloc>(context).add(Swiped(forward: true));
         } else {
@@ -66,14 +65,6 @@ class _TaskScreenState extends State<TaskScreen> {
               Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 1),
-                      spreadRadius: 0.4,
-                      blurRadius: 6,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
                 ),
                 child: Container(
                   height: 50,

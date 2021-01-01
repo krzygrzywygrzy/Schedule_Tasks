@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 List<String> weekDays = [
   "Monday",
   "Tuesday",
@@ -17,3 +19,10 @@ List<String> weekDaysShort = [
   "Sat",
   "Sun",
 ];
+
+const kShadow = BoxShadow(
+  offset: Offset(1, 1),
+  spreadRadius: 0.4,
+  blurRadius: 6,
+  color: Colors.black54,
+);
