@@ -29,9 +29,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         // yield EmptyScreen();
         yield MainScreen(tasks: tasks, date: dateTime);
       }
-    }
-    if (event is DisplayAddTaskScreen) {
+    } else if (event is DisplayAddTaskScreen) {
       yield AddScreen();
+    } else if (event is AddNewTask) {
+      tasks.add(event.task);
+      _localDataSource.cacheData(tasks);
+      yield MainScreen(tasks: tasks, date: dateTime);
     }
   }
 }

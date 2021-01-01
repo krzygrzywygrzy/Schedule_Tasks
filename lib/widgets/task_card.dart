@@ -28,26 +28,23 @@ class TaskCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
+              Text(
+                "$title",
+                textAlign: TextAlign.end,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "$title",
-                    textAlign: TextAlign.end,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("Begins at: ${time.hour}:${time.minute}"),
-                      Text("Duration: 4h"),
-                    ],
-                  ),
+                  Text("Begins at: ${time.hour}:${time.minute}"),
+                  Text("Duration: 4h"),
                 ],
               ),
               SizedBox(
@@ -64,8 +61,14 @@ class TaskCard extends StatelessWidget {
   }
 
   Widget displayDescription() {
-    if (description != null) {
-      return Text('$description');
+    if (description != null || description == "") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("description:"),
+          Text('$description'),
+        ],
+      );
     } else {
       return Container();
     }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_tasks/const.dart';
+import 'package:schedule_tasks/models/task_model.dart';
 import 'package:schedule_tasks/widgets/day_button.dart';
 import 'package:schedule_tasks/widgets/time_picker.dart';
 import 'bloc/task_bloc.dart';
@@ -29,7 +30,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             label: weekDaysShort[i],
             toogle: (id) {
               selected[id] = !selected[id];
-              print(selected);
             },
           ),
         ),
@@ -194,7 +194,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  List<String> days = [];
+                  for (int i = 0; i <= weekDaysShort.length - 1; i++) {
+                    if (selected[i]) days.add(weekDaysShort[i]);
+                  }
+                  BlocProvider.of<TaskBloc>(context).add(
+                    AddNewTask(
+                      task: Task(
+                        title: title,
+                        description: description != null ? description : "",
+                        time: beginTime,
+                        endTime: endTime,
+                        weekDays: days,
+                      ),
+                    ),
+                  );
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
