@@ -6,12 +6,14 @@ class TaskCard extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.time,
+    @required this.endTime,
     this.description,
   }) : super(key: key);
 
   final String title;
   final String description;
   final TimeOfDay time;
+  final TimeOfDay endTime;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class TaskCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Begins at: ${time.hour}:${time.minute}"),
-                  Text("Duration: 4h"),
+                  Text("Ends at: ${endTime.hour}:${endTime.minute}"),
                 ],
               ),
               SizedBox(

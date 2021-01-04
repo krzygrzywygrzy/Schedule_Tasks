@@ -23,6 +23,9 @@ class AddScreen extends TaskState {
 }
 
 class ErrorScreen extends TaskState {
+  final String message;
+  ErrorScreen({@required this.message});
+
   @override
-  List<Object> get props => throw [];
+  List<Object> get props => throw [message];
 }

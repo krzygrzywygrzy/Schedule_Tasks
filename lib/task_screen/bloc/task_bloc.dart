@@ -42,11 +42,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         yield MainScreen(tasks: _filter(), date: _dateTime);
       } on CacheException {
         yield MainScreen(tasks: _filter(), date: _dateTime);
-        yield ErrorScreen();
+        yield ErrorScreen(message: "You haven't scheduled any tasks!");
       }
     } else if (event is DisplayAddTaskScreen) {
       yield AddScreen();
-      _filter();
     } else if (event is AddNewTask) {
       _tasks.add(event.task);
       _localDataSource.cacheData(_tasks);
@@ -58,6 +57,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         _dateTime = _dateTime.add(Duration(days: 1));
 
       yield MainScreen(tasks: _filter(), date: _dateTime);
+    } else if (event is Error) {
+      //TODO: repair the bug -> AddScreen dissapeares
+      // yield ErrorScreen(message: event.message);
     }
   }
 }

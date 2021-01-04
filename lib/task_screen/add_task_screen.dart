@@ -213,7 +213,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       ),
                     );
                   } else {
-                    //TODO: display alert dialog
+                    BlocProvider.of<TaskBloc>(context).add(
+                      Error(message: "Provide the nessesary data!"),
+                    );
                   }
                 },
                 child: Container(

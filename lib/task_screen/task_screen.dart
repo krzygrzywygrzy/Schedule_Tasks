@@ -24,7 +24,7 @@ class _TaskScreenState extends State<TaskScreen> {
               if (state is ErrorScreen) {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text("There is no saved tasks!!!"),
+                    content: Text("${state.message}"),
                   ),
                 );
               }
@@ -39,7 +39,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   return AddTaskScreen();
                 } else {
                   //else statement just to not get annoyied
-                  return Container();
+                  //return Container();
                 }
               },
             ),
@@ -88,6 +88,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       return TaskCard(
                         title: tasks[index].title,
                         time: tasks[index].time,
+                        endTime: tasks[index].endTime,
                         description: tasks[index].description,
                       );
                     },

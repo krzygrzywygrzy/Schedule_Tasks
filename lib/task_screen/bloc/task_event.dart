@@ -28,3 +28,10 @@ class Swiped extends TaskEvent {
   @override
   List<Object> get props => [forward];
 }
+
+class Error extends TaskEvent {
+  final String message;
+  Error({this.message});
+  @override
+  List<Object> get props => [message];
+}
